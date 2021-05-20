@@ -5,6 +5,7 @@ import Home from '../home/Home';
 import AuthPage from '../auth/AuthPage';
 import ArtworksPage from '../artworks/ArtworksPage';
 import ArtworkDetail from '../artworks/ArtworkDetail';
+import Favorites from '../favorites/Favorites';
 import {
   BrowserRouter as Router,
   Route,
@@ -66,6 +67,18 @@ class App extends Component {
                 render={(routerProps) =>
                   this.state.token ? (
                     <ArtworkDetail {...routerProps} />
+                  ) : (
+                    <Redirect to='/auth' />
+                  )
+                }
+              />
+
+              <Route
+                path='/favorites'
+                exact={true}
+                render={(routerProps) =>
+                  this.state.token ? (
+                    <Favorites {...routerProps} />
                   ) : (
                     <Redirect to='/auth' />
                   )

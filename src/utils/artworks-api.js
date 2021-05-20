@@ -27,3 +27,20 @@ export async function getArtwork(id) {
     .set('Authorization', window.localStorage.getItem('TOKEN'));
   return response.body;
 }
+
+export async function addFavorite(favorite) {
+  const response = await request
+    .post('/api/favorites')
+    .set('Authorization', window.localStorage.getItem('TOKEN'))
+    .send(favorite);
+
+  return response.body;
+}
+
+export async function getMyFavorites() {
+  const response = await request
+    .get('/api/me/favorites')
+    .set('Authorization', window.localStorage.getItem('TOKEN'));
+  return response.body;
+}
+
