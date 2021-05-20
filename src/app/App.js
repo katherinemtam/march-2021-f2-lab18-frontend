@@ -62,6 +62,7 @@ class App extends Component {
 
               <Route
                 path='/artworks/:id'
+                exact={true}
                 render={(routerProps) =>
                   this.state.token ? (
                     <ArtworkDetail {...routerProps} />
