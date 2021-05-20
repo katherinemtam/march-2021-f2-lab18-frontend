@@ -1,17 +1,13 @@
 import request from 'superagent';
 
 export async function signUp(credentials) {
-  const response = await request
-    .post('/api/auth/signup')
-    .send(credentials);
+  const response = await request.post('/api/auth/signup').send(credentials);
 
   return response.body;
 }
 
 export async function signIn(credentials) {
-  const response = await request
-    .post('/api/auth/signin')
-    .send(credentials);
+  const response = await request.post('/api/auth/signin').send(credentials);
 
   return response.body;
 }
@@ -21,6 +17,13 @@ export async function getArtworks(search) {
     .get('/api/artworks')
     .set('Authorization', window.localStorage.getItem('TOKEN'))
     .query({ search: search });
-  
+
+  return response.body;
+}
+
+export async function getArtwork(id) {
+  const response = await request
+    .get(`/api/artworks/${id}`)
+    .set('Authorization', window.localStorage.getItem('TOKEN'));
   return response.body;
 }
