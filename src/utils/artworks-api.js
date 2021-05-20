@@ -15,3 +15,12 @@ export async function signIn(credentials) {
 
   return response.body;
 }
+
+export async function getArtworks(search) {
+  const response = await request
+    .get('/api/artworks')
+    .set('Authorization', window.localStorage.getItem('TOKEN'))
+    .query({ search: search });
+  
+  return response.body;
+}
