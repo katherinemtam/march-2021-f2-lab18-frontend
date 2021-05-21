@@ -1,4 +1,4 @@
-# Met Museum API
+# Met Museum Artworks
 
 This lab gets artworks from the met museum API and let's you search for specific titles. You can also favorite the artworks you like and unfavorite them when you are no longer interested in them.
 
