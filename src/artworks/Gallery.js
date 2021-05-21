@@ -5,7 +5,7 @@ import './Gallery.css';
 export default class Gallery extends Component {
   render() {
     const { artworks, onFavorited } = this.props;
-    return (
+    return artworks.length > 0 ? (
       <ul className='Gallery'>
         {artworks.map((artwork) => (
           <Artwork
@@ -16,6 +16,8 @@ export default class Gallery extends Component {
           />
         ))}
       </ul>
+    ) : (
+      <h2>No artworks to show. Please search for a title of your interest!</h2>
     );
   }
 }
