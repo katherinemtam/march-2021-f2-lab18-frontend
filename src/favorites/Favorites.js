@@ -18,7 +18,6 @@ export default class Favorites extends Component {
 
   handleFavorite = async (artwork, isFavorite) => {
     try {
-      debugger;
       const { favorites } = this.state;
       if (isFavorite) {
         const response = await addFavorite(artwork);
