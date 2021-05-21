@@ -37,10 +37,17 @@ export async function addFavorite(favorite) {
   return response.body;
 }
 
+export async function deleteFavorite(id) {
+  const response = await request
+    .delete(`/api/favorites/${id}`)
+    .set('Authorization', window.localStorage.getItem('TOKEN'));
+
+  return response.body;
+}
+
 export async function getMyFavorites() {
   const response = await request
     .get('/api/me/favorites')
     .set('Authorization', window.localStorage.getItem('TOKEN'));
   return response.body;
 }
-

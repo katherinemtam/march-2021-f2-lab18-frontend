@@ -4,12 +4,24 @@ import './Gallery.css';
 
 export default class Gallery extends Component {
   render() {
-    const { artworks, isFavorited } = this.props;
+    const { artworks, favorites, onFavorited } = this.props;
     return (
       <ul className='Gallery'>
         {artworks.map((artwork) => (
-          <Artwork key={artwork.objectID} artwork={artwork} isFavorited={
-            isFavorited} />
+          <Artwork
+            key={artwork.objectID}
+            artwork={artwork}
+            isFavorite={false}
+            onFavorited={onFavorited}
+          />
+        ))}
+        {favorites.map((favorite) => (
+          <Artwork
+            key={favorite.objectID}
+            favorite={favorite}
+            isFavorite={true}
+            onFavorited={onFavorited}
+          />
         ))}
       </ul>
     );
