@@ -25,6 +25,7 @@ export async function getArtwork(id) {
   const response = await request
     .get(`/api/artworks/${id}`)
     .set('Authorization', window.localStorage.getItem('TOKEN'));
+
   return response.body;
 }
 
@@ -34,7 +35,7 @@ export async function addFavorite(favorite) {
     .set('Authorization', window.localStorage.getItem('TOKEN'))
     .send(favorite);
 
-  return response.body;
+  return response;
 }
 
 export async function deleteFavorite(id) {
@@ -42,12 +43,21 @@ export async function deleteFavorite(id) {
     .delete(`/api/favorites/${id}`)
     .set('Authorization', window.localStorage.getItem('TOKEN'));
 
-  return response.body;
+  return response;
 }
 
 export async function getMyFavorites() {
   const response = await request
     .get('/api/me/favorites')
     .set('Authorization', window.localStorage.getItem('TOKEN'));
+
   return response.body;
+}
+
+export async function isMyFavorite(objectID) {
+  const response = await request
+    .get(`/api/me/favorites/${objectID}`)
+    .set('Authorization', window.localStorage.getItem('TOKEN'));
+
+  return response.body.length > 0;
 }

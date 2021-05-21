@@ -25,35 +25,17 @@ export default class ArtworksPage extends Component {
 
   handleFavorite = async (artwork, isFavorite) => {
     try {
-      let updatedArtworks, updatedFavorites;
-      const { artworks, favorites } = this.state;
+      const { favorites } = this.state;
       if (isFavorite) {
         const response = await addFavorite(artwork);
-        const favorite = response.body;
-
-        // find the index of the favorite artwork
-        let index = 0;
-        for (let i = 0; i < artworks.length; i++) {
-          if (artworks[i].objectID === favorite.objectID) {
-            index = i;
-            break;
-          }
+        if (response.status !== 200) {
+          throw new Error(response.body);
         }
-
-        // delete the favorite artwork from artworks array
-        artworks.splice(index, 1);
-
-        // assign the artworks to an updatedArtworks array
-        // not sure if this works, though!
-        updatedArtworks = artworks;
-
-        // add response.body to favorites array
+        const favorite = response.body;
+        // add artwork to favorites array
         favorites.splice(1, 0, favorite);
-        updatedFavorites = favorites;
       } else {
-        const response = await deleteFavorite(artwork);
-
-        // find the index of the favorite artwork
+        // find the artwork id to delete
         let index = 0;
         for (let i = 0; i < favorites.length; i++) {
           if (favorites[i].objectID === artwork.objectID) {
@@ -61,32 +43,26 @@ export default class ArtworksPage extends Component {
             break;
           }
         }
-
+        const favoriteId = favorites[index].id;
+        const response = await deleteFavorite(favoriteId);
+        if (response.status !== 200) {
+          throw new Error(response.body);
+        }
         // delete the artwork from favorites array
         favorites.splice(index, 1);
-
-        updatedFavorites = favorites;
-
-        // add the artwork to artworks array
-        artworks.splice(1, 0, artwork);
-        updatedArtworks = artworks;
       }
-      this.setState({ artworks: updatedArtworks, favorites: updatedFavorites });
+      this.setState({ favorites: [...favorites] });
     } catch (err) {
       console.log(err.message);
     }
   };
 
   render() {
-    const { artworks, favorites } = this.state;
+    const { artworks } = this.state;
     return (
       <div className='ArtworksPage'>
         <ArtworkSearch onSearch={this.handleSearch} />
-        <Gallery
-          artworks={artworks}
-          favorites={favorites}
-          onFavorited={this.handleFavorite}
-        />
+        <Gallery artworks={artworks} onFavorited={this.handleFavorite} />
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { isMyFavorite } from '../utils/artworks-api';
 import './Artwork.css';
 
 export default class Artwork extends Component {
@@ -7,15 +8,22 @@ export default class Artwork extends Component {
     isFavorite: false,
   };
 
-  componentDidMount() {
-    this.setState({ isFavorite: this.props.isFavorite });
+  async componentDidMount() {
+    this.setState({
+      isFavorite: await isMyFavorite(this.props.artwork.objectID),
+    });
   }
 
   handleClick = (e) => {
-    e.preventDefault();
-    const { artwork, onFavorited } = this.props;
-    onFavorited(artwork, this.state.isFavorite);
-    this.setState({ isFavorite: !this.state.isFavorite });
+    try {
+      e.preventDefault();
+      const { artwork, onFavorited } = this.props;
+      const isFavorite = !this.state.isFavorite;
+      onFavorited(artwork, isFavorite);
+      this.setState({ isFavorite });
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   render() {
