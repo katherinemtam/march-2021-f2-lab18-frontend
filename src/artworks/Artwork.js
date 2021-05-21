@@ -15,8 +15,16 @@ export default class Artwork extends Component {
   }
 
   handleClick = (e) => {
+    e.preventDefault();
+    if (
+      this.state.isFavorite &&
+      !window.confirm(
+        'Are you sure you wish to remove this from your favorites?'
+      )
+    ) {
+      return;
+    }
     try {
-      e.preventDefault();
       const { artwork, onFavorited } = this.props;
       const isFavorite = !this.state.isFavorite;
       onFavorited(artwork, isFavorite);
