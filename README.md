@@ -35,3 +35,5 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+**Search requires time to query through db.
+***Please use following example search: "Quail and Millet" or "The Death of Socrates"
