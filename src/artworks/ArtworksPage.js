@@ -5,6 +5,7 @@ import {
   getArtworks,
   addFavorite,
   deleteFavorite,
+  getMyFavorites,
 } from '../utils/artworks-api';
 import './ArtworksPage.css';
 
@@ -13,6 +14,10 @@ export default class ArtworksPage extends Component {
     artworks: [],
     favorites: [],
   };
+
+  async componentDidMount() {
+    this.setState({ favorites: await getMyFavorites() });
+  }
 
   handleSearch = async (search) => {
     try {
@@ -25,6 +30,7 @@ export default class ArtworksPage extends Component {
 
   handleFavorite = async (artwork, isFavorite) => {
     try {
+      debugger;
       const { favorites } = this.state;
       if (isFavorite) {
         const response = await addFavorite(artwork);
